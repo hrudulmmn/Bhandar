@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel,EmailStr,ConfigDict
-from backend.app.database.enums import Transactiontype
+from app.database.enums import Transactiontype
 
 class UserCreate(BaseModel):
     name:str
@@ -46,3 +46,7 @@ class TransactionResponse(BaseModel):
     upi_ref_no:str | None
     payment_app:str | None
     category:str | None
+
+class TokenResponse(BaseModel):
+    access_token:str
+    token_type:str

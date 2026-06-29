@@ -1,7 +1,7 @@
 from sqlalchemy import Column,String,Integer,Float, ForeignKey,DateTime,Enum,Numeric
 from sqlalchemy.orm import relationship
-from backend.app.database.db import Base
-from backend.app.database.enums import Transactiontype
+from app.database.db import Base
+from app.database.enums import Transactiontype
 from sqlalchemy.sql import func
 
 
