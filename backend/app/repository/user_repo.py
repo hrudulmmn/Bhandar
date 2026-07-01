@@ -10,7 +10,7 @@ def create_user(db:Session,user:UserCreate,hashed_password:str)->User:
     )
     db.add(db_user)
     db.commit()
-    db.refresh()
+    db.refresh(db_user)
     return db_user
 
 def get_user_by_email(db:Session,email:str)->User|None:

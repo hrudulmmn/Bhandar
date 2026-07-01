@@ -50,3 +50,12 @@ class TransactionResponse(BaseModel):
 class TokenResponse(BaseModel):
     access_token:str
     token_type:str
+
+class DashboardResponse(BaseModel):
+    total_credit:float
+    total_debit:float
+    transaction_count:int
+    recent_trans:list
+
+class MessageResponse(BaseModel):
+    message:str

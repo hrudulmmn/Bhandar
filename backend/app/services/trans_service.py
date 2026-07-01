@@ -7,7 +7,7 @@ from app.database.models import (
 )
 
 from app.database.schema import (
-    TransactionCreate
+    TransactionCreate, DashboardResponse,MessageResponse
 )
 
 from app.repository.transaction_repo import (
@@ -76,6 +76,32 @@ def dele_trans(db:Session,curr:User,trans_id:int):
         )
     
     delete_transaction(db,trans)
-    return{
-        "message":"Transaction deleted successfully!"
-    }
+    return MessageResponse(message="Transaction deleted successfully!")
+    
+
+def get_dashboard(db:Session,curr:User):
+    trans = get_all_transactions(db,curr.id)
+
+    if not trans:
+        return DashboardResponse(
+            total_credit=0.0,
+            total_debit=0.0,
+            transaction_count=0,
+            recent_trans=[]
+        )
+    credit = 0
+    debit = 0
+    total = len(trans)
+
+    for tran in trans:
+        if tran.transaction_type is "DEBIT":
+            credit+=tran.amount
+        else:
+            debit+=tran.amount
+    
+    return DashboardResponse(
+        total_credit=credit,
+        total_debit=debit,
+        transaction_count=total,
+        recent_trans=get_recent_trans(db,curr)
+    )

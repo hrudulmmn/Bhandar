@@ -1,7 +1,7 @@
 from fastapi import Depends,HTTPException,status
 from sqlalchemy.orm import Session
 
-from app.database.schema import UserCreate,UserLogin,UserResponse,TokenResponse
+from app.database.schema import UserCreate,UserLogin,UserResponse,TokenResponse,MessageResponse
 from app.database.models import User
 from app.services.auth import hash_password,verify_password,generate_token
 from app.repository.user_repo import create_user,delete_user,get_user_by_email
@@ -45,8 +45,7 @@ def login_user(user:UserLogin,db:Session)->TokenResponse:
         token_type="bearer"
     )
 
-    def delete_user(user:User,db:Session):
-        delete_user(db,user)
-        return {
-            "message":"User Deleted Successfully!"
-        }
+def delete_user(user:User,db:Session):
+    delete_user(db,user)
+    return MessageResponse(message="User Deleted Successfully!")
+    
