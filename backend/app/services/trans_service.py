@@ -94,10 +94,10 @@ def get_dashboard(db:Session,curr:User):
     total = len(trans)
 
     for tran in trans:
-        if tran.transaction_type is "DEBIT":
-            credit+=tran.amount
-        else:
+        if tran.transaction_type == "DEBIT":
             debit+=tran.amount
+        else:
+            credit+=tran.amount
     
     return DashboardResponse(
         total_credit=credit,

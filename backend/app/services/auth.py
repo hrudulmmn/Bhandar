@@ -18,7 +18,7 @@ def generate_token(data:dict,expires_delta:Optional[timedelta] = None)->str:
     if expires_delta:
         expire = datetime.now(timezone.utc)+expires_delta
     else:
-        expire = datetime.now(timezone.utc)+timedelta(minutes=JWT_EXPIRE)
+        expire = datetime.now(timezone.utc)+timedelta(minutes=int(JWT_EXPIRE))
     
     to_encode.update({"exp":expire})
 
