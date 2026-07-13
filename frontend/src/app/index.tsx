@@ -8,6 +8,8 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/button';
 
 function getDevMenuHint() {
   if (Platform.OS === 'web') {
@@ -37,20 +39,23 @@ export default function HomeScreen() {
           <ThemedText type="title" style={styles.title}>
             Welcome to&nbsp;Expo
           </ThemedText>
+          <Card>
+            <Button title='Login'/>
+          </Card>
         </ThemedView>
 
         <ThemedText type="code" style={styles.code}>
           get started
         </ThemedText>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
+        <ThemedView type="card" style={styles.stepContainer}>
           <HintRow
             title="Try editing"
             hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
           />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
+          <HintRow title="Dev too" hint={getDevMenuHint()} />
           <HintRow
-            title="Fresh start"
+            title="Fresh star"
             hint={<ThemedText type="code">npm run reset-project</ThemedText>}
           />
         </ThemedView>
