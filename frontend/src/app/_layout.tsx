@@ -2,18 +2,19 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as NavigationBar from "expo-navigation-bar";
 import { useEffect } from "react";
+import { AuthProvider } from "../contexts/AuthContext";
 
-export default function Layout() {
+export default function RootLayout() {
   useEffect(() => {
-    async function hideBar() {
+    async function setupNavigationBar() {
       await NavigationBar.NavigationBar.setHidden(true);
     }
 
-    hideBar();
+    setupNavigationBar();
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       <StatusBar style="light" />
       <Stack
         screenOptions={{
@@ -24,6 +25,6 @@ export default function Layout() {
           },
         }}
       />
-    </>
+    </AuthProvider>
   );
 }

@@ -7,7 +7,8 @@ from app.database.schema import (
     UserCreate,
     UserLogin,
     TokenResponse,
-    MessageResponse
+    MessageResponse,
+    UserResponse
 )
 
 from app.dependency import get_current_user
@@ -43,4 +44,11 @@ def del_user(
     db:Session = Depends(get_db)
 ):
     return delete_user(user,db)
+
+
+@auth_router.get("/me", response_model=UserResponse)
+def get_me(
+    user: User = Depends(get_current_user)
+):
+    return user
 
