@@ -60,9 +60,7 @@ export function AuthProvider({
 
     setUser(me);
   } catch {
-    await SecureStore.deleteItemAsync(
-      "access_token"
-    );
+    await SecureStore.deleteItemAsync("access_token");
 
     setUser(null);
   } finally {

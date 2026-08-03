@@ -17,9 +17,55 @@ import BottomNavigation from "../components/ui/bottomnavigation";
 
 import { transactions } from "../constants/mockData";
 import { Colors } from "../constants/theme";
+import { Alert } from "react-native";
+
+import {
+  requestSMSPermission,
+} from "../services/sms/permissions";
+
+import {
+  syncTransactions,
+} from "../services/sms/syncService";
 
 export default function HomeScreen() {
   const router = useRouter();
+  async function handleSync() {
+
+  const granted =
+    await requestSMSPermission();
+
+  if (!granted) {
+
+    Alert.alert(
+      "Permission Required",
+      "Please allow SMS permission to import UPI transactions."
+    );
+
+    return;
+
+  }
+
+  try {
+
+    const imported =
+      await syncTransactions();
+
+    Alert.alert(
+      "Sync Complete",
+      `${imported} transactions imported`
+    );
+
+  } catch (err) {
+
+    Alert.alert(
+      "Sync Failed",
+      "Something went wrong."
+    );
+
+  }
+
+}
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,6 +76,14 @@ export default function HomeScreen() {
         <Header title="BHANDAR" rightText="AN" />
 
         <BalanceCard />
+        <TouchableOpacity
+          style={styles.syncButton}
+          onPress={handleSync}
+        >
+          <Text style={styles.syncText}>
+            🔄 Sync SMS
+          </Text>
+        </TouchableOpacity>
 
         <Text style={styles.heading}>Recent Transactions</Text>
 
@@ -125,4 +179,31 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 15,
   },
+  syncButton: {
+
+  backgroundColor: Colors.light.accent,
+
+  marginTop: 15,
+
+  marginBottom: 10,
+
+  alignSelf: "center",
+
+  paddingHorizontal: 28,
+
+  paddingVertical: 12,
+
+  borderRadius: 30,
+
+},
+
+syncText: {
+
+  color: "white",
+
+  fontWeight: "700",
+
+  fontSize: 16,
+
+},
 });
