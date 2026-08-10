@@ -6,12 +6,12 @@ import {
 } from "react";
 
 import {
+  getCurrentUser,
   login as loginService,
   logout as logoutService,
-  getCurrentUser,
 } from "../services/auth";
 
-import * as SecureStore from "expo-secure-store"
+import * as SecureStore from "expo-secure-store";
 
 interface User {
   id: number;
@@ -22,11 +22,14 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<void>;
   logout: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>(
+const AuthContext = createContext(
   {} as AuthContextType
 );
 
@@ -46,27 +49,35 @@ export function AuthProvider({
   }, []);
 
   async function initialize() {
-  try {
-    const token = await SecureStore.getItemAsync(
-      "access_token"
-    );
+    try {
+      const token =
+        await SecureStore.getItemAsync(
+          "access_token"
+        );
 
-    if (!token) {
+      if (!token) {
+        setUser(null);
+        return;
+      }
+
+      const me = await getCurrentUser();
+
+      setUser(me);
+    } catch (error) {
+      console.log(
+        "AUTH INITIALIZATION FAILED:",
+        error
+      );
+
+      await SecureStore.deleteItemAsync(
+        "access_token"
+      );
+
       setUser(null);
-      return;
+    } finally {
+      setLoading(false);
     }
-
-    const me = await getCurrentUser();
-
-    setUser(me);
-  } catch {
-    await SecureStore.deleteItemAsync("access_token");
-
-    setUser(null);
-  } finally {
-    setLoading(false);
   }
-}
 
   async function login(
     email: string,
@@ -74,8 +85,9 @@ export function AuthProvider({
   ) {
     await loginService({
       email,
-      password,
-    });
+      password
+    }
+    );
 
     const me = await getCurrentUser();
 
@@ -84,6 +96,7 @@ export function AuthProvider({
 
   async function logout() {
     await logoutService();
+
     setUser(null);
   }
 

@@ -1,22 +1,56 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Colors } from "../../constants/theme";
-import AppChip from "./appChip";
 
-export default function BalanceCard() {
+interface BalanceCardProps {
+  totalCredit: number;
+  totalDebit: number;
+}
+
+export default function BalanceCard({
+  totalCredit,
+  totalDebit,
+}: BalanceCardProps) {
+  const balance = totalCredit - totalDebit;
+
+  const totalActivity =
+    totalCredit + totalDebit;
+
   return (
     <View style={styles.card}>
-      <Text style={styles.month}>Total UPI Activity • June 2026</Text>
+      <Text style={styles.month}>
+        Total UPI Activity
+      </Text>
 
-      <Text style={styles.amount}>₹31,150</Text>
+      <Text style={styles.amount}>
+        ₹{totalActivity.toLocaleString("en-IN")}
+      </Text>
 
-      <Text style={styles.subtitle}>27 Transactions</Text>
+      <Text style={styles.subtitle}>
+        Credit ₹{totalCredit.toLocaleString("en-IN")}
+        {"  •  "}
+        Debit ₹{totalDebit.toLocaleString("en-IN")}
+      </Text>
 
-      <View style={styles.apps}>
-        <AppChip title="GPay" color="#34A853" />
-        <AppChip title="PhonePe" color="#7C3AED" />
-        <AppChip title="Paytm" color="#00B9F1" />
-        <AppChip title="BHIM" color="#2563EB" />
+      <View style={styles.divider} />
+
+      <View style={styles.balanceRow}>
+        <Text style={styles.balanceLabel}>
+          Net Balance
+        </Text>
+
+        <Text
+          style={[
+            styles.balanceAmount,
+            {
+              color:
+                balance >= 0
+                  ? "#FFFFFF"
+                  : "#FFD6D6",
+            },
+          ]}
+        >
+          ₹{balance.toLocaleString("en-IN")}
+        </Text>
       </View>
     </View>
   );
@@ -33,6 +67,7 @@ const styles = StyleSheet.create({
   month: {
     color: "#FFF6EA",
     fontSize: 13,
+    fontWeight: "600",
   },
 
   amount: {
@@ -44,11 +79,30 @@ const styles = StyleSheet.create({
 
   subtitle: {
     color: "white",
+    fontSize: 14,
     marginBottom: 18,
   },
 
-  apps: {
+  divider: {
+    height: 1,
+    backgroundColor: "rgba(255,255,255,0.25)",
+    marginBottom: 15,
+  },
+
+  balanceRow: {
     flexDirection: "row",
-    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  balanceLabel: {
+    color: "#FFF6EA",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+
+  balanceAmount: {
+    fontSize: 20,
+    fontWeight: "800",
   },
 });

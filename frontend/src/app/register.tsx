@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useState } from "react";
 import {
-  View,
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 
+import { Image } from "expo-image";
 import { Colors } from "../constants/theme";
 import { register } from "../services/auth";
 
@@ -73,7 +74,7 @@ export default function RegisterScreen() {
         [
           {
             text: "OK",
-            onPress: () => router.replace("./login"),
+            onPress: () => router.replace("/login"),
           },
         ]
       );
@@ -91,11 +92,9 @@ export default function RegisterScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
+        <Image source={require("../../assets/images/bhandar.png")}
+          style={styles.img}/>
         <Text style={styles.logo}>BHANDAR</Text>
-
-        <Text style={styles.subtitle}>
-          Create your account
-        </Text>
       </View>
 
       <View style={styles.form}>
@@ -250,6 +249,7 @@ const styles = StyleSheet.create({
 
   header: {
     marginBottom: 40,
+    alignItems:"center"
   },
 
   logo: {
@@ -299,6 +299,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
+  },
+  img: {
+  width: 200,
+  height:200,
+  borderRadius: 20,
   },
 
   buttonText: {

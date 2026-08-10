@@ -1,7 +1,6 @@
-import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter, usePathname } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Colors } from "../../constants/theme";
 
 export default function BottomNavigation() {
@@ -18,11 +17,6 @@ export default function BottomNavigation() {
       icon: "list-outline",
       active: "list",
       route: "/transactions",
-    },
-    {
-      icon: "stats-chart-outline",
-      active: "stats-chart",
-      route: "/analytics",
     },
     {
       icon: "person-outline",

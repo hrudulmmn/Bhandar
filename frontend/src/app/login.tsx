@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useState } from "react";
 import {
-  View,
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 
+import { Image } from "expo-image";
 import { Colors } from "../constants/theme";
 import { useAuth } from "../contexts/AuthContext";
+
 
 export default function LoginScreen() {
   const { login } = useAuth();
@@ -42,6 +44,19 @@ export default function LoginScreen() {
         err?.response?.data?.detail ??
           "Invalid email or password."
       );
+  console.log("========== LOGIN ERROR ==========");
+  console.log("ERROR:", err);
+  console.log("MESSAGE:", err?.message);
+  console.log("STATUS:", err?.response?.status);
+  console.log("DATA:", err?.response?.data);
+  console.log("=================================");
+
+  Alert.alert(
+    "Login Failed",
+    err?.response?.data?.detail ??
+      err?.message ??
+      "Login failed"
+  );
     } finally {
       setLoading(false);
     }
@@ -51,6 +66,8 @@ export default function LoginScreen() {
     <SafeAreaView style={styles.container}>
 
       <View style={styles.header}>
+        <Image source={require("../../assets/images/bhandar.png")}
+          style={styles.img}/>
 
         <Text style={styles.logo}>BHANDAR</Text>
 
@@ -169,6 +186,14 @@ const styles = StyleSheet.create({
 
   header: {
     marginBottom: 50,
+    alignItems:"center"
+
+  },
+  img: {
+  width: 200,
+  height:200,
+  borderRadius: 20,
+  marginBottom: 5,
   },
 
   logo: {
