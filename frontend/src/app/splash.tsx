@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
+import { useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
+import { Image } from "expo-image";
 import { Colors } from "../constants/theme";
 import { getCurrentUser } from "../services/auth";
 
@@ -12,69 +13,102 @@ export default function SplashScreen() {
   useEffect(() => {
     async function initializeApp() {
       // Keep splash visible for 2 seconds
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) =>
+        setTimeout(resolve, 2000)
+      );
 
       try {
-        const token = await SecureStore.getItemAsync("access_token");
+        // Check whether a JWT exists
+        const token =
+          await SecureStore.getItemAsync("access_token");
 
-        // User not logged in
+        // No token → user is not logged in
         if (!token) {
           router.replace("/login");
           return;
         }
 
-        // Verify token with backend
-        await getCurrentUser();
+        // Token exists → verify it with the backend
+        const user = await getCurrentUser();
 
-        // Token is valid
+        // Token was invalid / user could not be retrieved
+        if (!user) {
+          await SecureStore.deleteItemAsync(
+            "access_token"
+          );
+
+          router.replace("/login");
+          return;
+        }
+
+        // Token is valid → go to home
         router.replace("/home");
+
       } catch (error) {
-        // Token invalid or expired
-        await SecureStore.deleteItemAsync("access_token");
+        console.log(
+          "SESSION CHECK FAILED:",
+          error
+        );
+
+        // Remove invalid/expired token
+        await SecureStore.deleteItemAsync(
+          "access_token"
+        );
+
+        // Send user to login
         router.replace("/login");
       }
     }
 
     initializeApp();
-  }, []);
+  }, [router]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.logo}>
-        <Text style={styles.logoText}>B</Text>
-      </View>
 
-      <Text style={styles.title}>BHANDAR</Text>
+      <Image source={require("../../assets/images/bhandar.png")}
+                style={styles.img}/>
+
+      <Text style={styles.title}>
+        BHANDAR
+      </Text>
 
       <Text style={styles.subtitle}>
         YOUR UNIFIED UPI PASSBOOK
       </Text>
 
       <View style={styles.chips}>
+
         <View style={styles.chip}>
-          <Text style={styles.chipText}>GPay</Text>
+          <Text style={styles.chipText}>
+            GPay
+          </Text>
         </View>
 
         <View style={styles.chip}>
-          <Text style={styles.chipText}>PhonePe</Text>
+          <Text style={styles.chipText}>
+            PhonePe
+          </Text>
         </View>
 
         <View style={styles.chip}>
-          <Text style={styles.chipText}>Paytm</Text>
+          <Text style={styles.chipText}>
+            Paytm
+          </Text>
         </View>
 
         <View style={styles.chip}>
-          <Text style={styles.chipText}>BHIM</Text>
+          <Text style={styles.chipText}>
+            BHIM
+          </Text>
         </View>
+
       </View>
-
-      <Text style={styles.loading}>
-        Checking your account...
-      </Text>
 
       <Text style={styles.footer}>
         All your UPI history. One place.
       </Text>
+
     </View>
   );
 }
@@ -85,6 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
     justifyContent: "center",
     padding: 25,
+    alignItems:"center"
   },
 
   logo: {
@@ -150,5 +185,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     color: "#666",
     alignSelf: "center",
+  },
+  img: {
+  width: 200,
+  height:200,
+  borderRadius: 20,
+  marginBottom: 5,
   },
 });

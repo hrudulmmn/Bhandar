@@ -1,6 +1,67 @@
-# Ignore all environment files
-**/.env
-**/.env.*
+# =========================
+# Node / Expo
+# =========================
+frontend/node_modules/
+frontend/.expo/
+frontend/.expo-shared/
+frontend/dist/
+frontend/web-build/
 
-# Ignore all virtual environments
-**/.venv/
+# Expo native folders
+# Uncomment these ONLY if you do NOT commit native projects
+# frontend/android/
+# frontend/ios/
+
+# =========================
+# Frontend environment files
+# =========================
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# =========================
+# Backend Python
+# =========================
+backend/.venv/
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/**/*.pyc
+
+# Backend environment / secrets
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# =========================
+# Python tooling
+# =========================
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# =========================
+# Build / temporary
+# =========================
+*.tmp
+*.temp
+*.tsbuildinfo

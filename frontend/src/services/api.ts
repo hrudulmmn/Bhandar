@@ -1,15 +1,8 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
-// Replace with your backend URL
-// Android Emulator:
-// http://10.0.2.2:8000
-//
-// Physical Phone:
-// http://YOUR_PC_IP:8000
-
 const api = axios.create({
-  baseURL: "http://YOUR_PC_IP:8000",
+  baseURL: "http://192.168.220.128:8001",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

@@ -1,12 +1,12 @@
-import React from "react";
 import {
-  View,
-  Text,
   StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { Transaction } from "../../types/transactions";
 import { Colors } from "../../constants/theme";
+import { Transaction } from "../../types/transactions";
+
 
 interface Props {
   transaction: Transaction;

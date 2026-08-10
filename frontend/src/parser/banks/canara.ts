@@ -31,8 +31,7 @@ private upiRegex =
 
     return (
       sender.includes("CANARABANK") ||
-      sender.includes("CANBNK")||
-      sender.includes("CAN")
+      sender.includes("CANBNK")
     );
 
   }

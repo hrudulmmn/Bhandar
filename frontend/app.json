@@ -19,7 +19,10 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.hrudulmmn.frontend"
+      "package": "com.hrudulmmn.frontend",
+      "permissions": [
+        "READ_SMS"
+      ]
     },
     "web": {
       "output": "static",
@@ -36,7 +39,8 @@
         }
       ],
       "expo-secure-store"
-    ],
+    ,"./plugin/withSMSReader"
+],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
