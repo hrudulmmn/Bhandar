@@ -4,6 +4,19 @@
 
 Bhandar is an Android mobile app that collects UPI transaction information from supported bank SMS messages and presents it in one unified passbook. It combines bank-specific SMS parsing, authenticated backend storage, transaction history, dashboard data, and user management.
 
+## Screenshots
+<table>
+  <tr>
+    <td><img src="screenshots/image.png" width="250"></td>
+    <td><img src="screenshots/image-1.png" width="250"></td>
+    <td><img src="screenshots/image-2.png" width="250"></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/image-3.png" width="250"></td>
+    <td><img src="screenshots/image-4.png" width="250"></td>
+  </tr>
+</table>
+
 ## Features
 
 - User registration, login and logout
